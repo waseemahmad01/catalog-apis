@@ -57,6 +57,9 @@ app.use("/", goUser);
 // Middleware
 app.use(errorHandler);
 app.use("/uploads", express.static("uploads"));
+app.get("/:id/:cid", (req, res) => {
+	res.send(req.params.id + req.params.cid);
+});
 // create a server
 import http from "http";
 import { PORT } from "./app/config";
