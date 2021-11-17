@@ -18,11 +18,18 @@ const favorites = {
 		}
 	},
 	async like(req, res, next) {
-		const { id } = req.params;
+		const { id, cid } = req.params;
 		try {
 			const data = await Favorite.exists({
-				$or: [{ stores: id }, { products: id }, { substores: id }],
+				$and: [
+					{ customerId: cid },
+					{ $or: [{ stores: id }, { products: id }, { substores: id }] },
+				],
 			});
+
+			// const data = await Favorite.exists({
+			// 	$or: [{ stores: id }, { products: id }, { substores: id }],
+			// });
 			res
 				.status(200)
 				.json({ status: true, message: "fetch successfully", data });
